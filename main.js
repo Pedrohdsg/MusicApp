@@ -6,43 +6,46 @@ const options = {
   },
 };
 
-
-
 function idArtist() {
-  fetch(
-    `https://deezerdevs-deezer.p.rapidapi.com/search?q=faithnomore`,
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      const e = document.createElement("p");
-      document
-        .getElementById("artistName")
-        .appendChild(
-          e
-        ).innerHTML = `<div hidden id="search">${response.data[0].artist.id}</div>`;
-      let pesquisaId = document.getElementById("search").innerHTML;
-      console.log(pesquisaId);
 
-      fetch(`https://deezerdevs-deezer.p.rapidapi.com/artist/${pesquisaId}`, options)
-        .then((response) => response.json())
-        .then((response) => {
-          const e = document.createElement("ul");
-          document.getElementById("artistName").appendChild(e).innerHTML = `
+  let inputArtist = document.getElementById("artistInput").value;
+  console.log(inputArtist);
+
+  
+
+  if (inputArtist != "") {
+    fetch(
+      `https://deezerdevs-deezer.p.rapidapi.com/search?q=${inputArtist}`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => {
+
+        fetch(
+          `https://deezerdevs-deezer.p.rapidapi.com/artist/${response.data[0].artist.id}`,
+          options
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            const e = document.createElement("ul");
+            document.getElementById("artistName").appendChild(e).innerHTML = `
       
       <li class="artista"><a href="${response.link}">${response.name}</a></li>
-      <img src="${response.picture_medium}" alt="">
+      <img class="artistImg" src="${response.picture_big}" alt="">
       `;
-        })
-        .catch((err) => console.error(err));
-    })
-    .catch((err) => console.error(err));
+
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
+  }
 }
 
 fetch(`https://deezerdevs-deezer.p.rapidapi.com/artist/2255`, options)
   .then((response) => response.json())
   .then((response) => console.log(response));
 
-
-
-idArtist();
+fetch('https://deezerdevs-deezer.p.rapidapi.com/search?q=faith%20no%20more', options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
