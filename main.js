@@ -9,7 +9,12 @@ const options = {
 function idArtist() {
   let inputArtist = document.getElementById("artistInput").value;
 
+  
+
   if (inputArtist != "") {
+    
+    
+
     fetch(
       `https://spotify23.p.rapidapi.com/search/?q=${inputArtist.replace(
         " ",
@@ -20,23 +25,29 @@ function idArtist() {
       .then((response) => response.json())
       .then((response) => {
         console.log(response.artists.items[0].data.profile);
-        const element = document.createElement("ul");
+        const element = document.createElement("div");
         console.log(element)
         document.getElementById("artistName").appendChild(element).innerHTML = `
       <li class="artistLi" id="listaId">${response.artists.items[0].data.profile.name}</li>
       <img class="artistImg" src="${response.artists.items[0].data.visuals.avatarImage.sources[0].url}" alt="">
-      <ul class="albumUl" id="albumIdUl">Álbuns:</ul>`
-
+      <ul id="albumId">Álbuns:</ul>`
       
       
-
       for(let i = 0; i < 10; i++){
-        const album = document.createElement("div");
-        album.classList.add('albumClass')
-        document.getElementById("artistName").appendChild(album).innerHTML = `      
+        const album = document.getElementById('albumId')
+       // const album = document.createElement("li");
+        album.classList.add('albumUl')
+        console.log(album)
+        album.appendChild(album).innerHTML = `<li>     
         <img class="albumImg" src="${response.albums.items[i].data.coverArt.sources[0].url}" alt="">
-        <p>${response.albums.items[i].data.name} - ${response.albums.items[i].data.date.year}</p>        
-        `}
+        <p>${response.albums.items[i].data.name} - ${response.albums.items[i].data.date.year}</p>
+        </li>        
+        `
+        // document.getElementById("albumId").appendChild(album).innerHTML = `     
+        // <img class="albumImg" src="${response.albums.items[i].data.coverArt.sources[0].url}" alt="">
+        // <p>${response.albums.items[i].data.name} - ${response.albums.items[i].data.date.year}</p>        
+        // `
+      }
       ;
       })
       .catch((err) => console.error(err));
@@ -75,4 +86,4 @@ fetch(
   .then((response) => console.log(response))
   .catch((err) => console.error(err));
 
-//   for(let i = 0; i < 10; i++){}
+
