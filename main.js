@@ -6,10 +6,9 @@ const options = {
   },
 };
 
-
-
 async function idArtist() {
-  const musicas = []
+  const musicas = [];
+  const musicasLink = [];
 
   let inputArtist = document.getElementById("artistInput").value;
 
@@ -20,6 +19,11 @@ async function idArtist() {
     )
       .then((response) => response.json())
       .then((response) => {
+        for (let i = 0; i < 25; i++) {
+          musicas.push(response.data[i].title);
+          musicasLink.push(response.data[i].link);
+        }
+
         fetch(
           `https://deezerdevs-deezer.p.rapidapi.com/artist/${response.data[0].artist.id}`,
           options
@@ -28,29 +32,29 @@ async function idArtist() {
           .then((response) => {
             console.log(response);
             const e = document.createElement("ul");
+            e.classList.add('artistUl')
             document.getElementById("artistName").appendChild(e).innerHTML = `
 
       <li class="artista"><a href="${response.link}">${response.name}</a></li>
       <img class="artistImg" src="${response.picture_big}" alt="">
-      <ul id="musicsUl" class="musicsUl">Músicas</ul>
-      
-      `
-    
-      ;
+      <p>Músicas:</p>
+      `;
+            const musicList = document.createElement("ul");
+            musicList.classList.add("musicLi");
+            console.log(musicList)
+
+            for (let i = 0; i < 25; i++) {
+              const e = document.createElement('li')
+              e.classList.add('musicLi')
+              document.getElementById("artistName").appendChild(e).innerHTML = `
+      <a href="${musicasLink[i]}">${musicas[i]}</a>
+       `;
+           
+            }
           })
           .catch((err) => console.error(err));
 
-          
-
-        for (let i = 0; i < 10; i++) {
-       console.log(i)
-          //const music = document.createElement("li");
-          
-          
-          // musicas.appendChild(music).innerHTML = `              
-          //      <p>${response.data[i].title} </p>
-          //      `
-        }
+        console.log(response);
       })
 
       .catch((err) => console.error(err));
@@ -93,22 +97,22 @@ async function idArtist() {
 //   })
 //   .catch((err) => console.error(err));
 
-fetch("https://deezerdevs-deezer.p.rapidapi.com/artist/2255", options)
-  .then((response) => response.json())
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((err) => console.error(err));
+// fetch("https://deezerdevs-deezer.p.rapidapi.com/artist/2255", options)
+//   .then((response) => response.json())
+//   .then((response) => {
+//     console.log(response);
+//   })
+//   .catch((err) => console.error(err));
 
-fetch(
-  "https://deezerdevs-deezer.p.rapidapi.com/search?q=faith%20no%20more",
-  options
-)
-  .then((response) => response.json())
-  .then((response) => console.log(response))
-  .catch((err) => console.error(err));
+// fetch(
+//   "https://deezerdevs-deezer.p.rapidapi.com/search?q=faith%20no%20more",
+//   options
+// )
+//   .then((response) => response.json())
+//   .then((response) => console.log(response))
+//   .catch((err) => console.error(err));
 
-fetch('https://deezerdevs-deezer.p.rapidapi.com/search?q=gal%20costa', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+// fetch('https://deezerdevs-deezer.p.rapidapi.com/search?q=gal%20costa', options)
+// 	.then(response => response.json())
+// 	.then(response => console.log(response))
+// 	.catch(err => console.error(err));
