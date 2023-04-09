@@ -1,21 +1,76 @@
 .artistImg {
-    margin: 20px;
-    border-radius: 320px;
-    border-style: ridge;
-    
+  margin: 16px;
+  border-radius: 32px;
+  border-style: solid;
+  border-width: 8px;
+  border-color: rgba(7, 2, 78, 0.445);
 }
 
 .albumImg {
-    max-width: 80px;
-    display: flexbox;
-    border-radius: 40px;
+  max-width: 80px;
+  display: flexbox;
+  border-radius: 40px;
 }
 
 .albumClass {
-    margin: 4px;
-    display: flexbox;
-    border-color: black;
-    padding: 8px;
-    flex-wrap: wrap;
-    max-width: 100px;
+  margin: 4px;
+  display: flexbox;
+  border-color: rgb(133, 7, 7);
+
+  padding: 8px;
+  flex-wrap: wrap;
+  max-width: 100px;
+}
+
+body {
+  background: fixed;
+  background: no-repeat;
+  background-size: cover;
+}
+
+.musicLi {
+  background-color: rgba(255, 254, 254, 0.418);
+  text-transform: capitalize;
+  padding: 4px;
+  border-radius: 4px;
+  margin: 4px;
+  margin-left: 40px;
+  max-block-size: 30%;
+  max-width: fit-content;
+}
+
+.artista {
+  background-color: rgba(7, 0, 0, 0.418);
+  text-transform: capitalize;
+  padding: 4px;
+  border-radius: 4px;
+  margin: 4px;
+  max-block-size: 30%;
+  max-width: fit-content;
+  color: blue;
+}
+
+.musics {
+  background-color: rgb(7, 0, 0);
+  color: aliceblue;
+  padding: 4px;
+  border-radius: 4px;
+  margin: 4px;
+  max-block-size: 30%;
+  max-width: fit-content;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(141, 140, 140, 0.486);
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-transform: capitalize;
+}
+
+#limparBtn{
+    display: none;
 }

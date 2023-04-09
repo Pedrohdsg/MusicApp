@@ -6,14 +6,20 @@ const options = {
   },
 };
 
-async function idArtist() {
+function idArtist() {
+    
   const musicas = [];
   const musicasLink = [];
-
   let inputArtist = document.getElementById("artistInput").value;
 
+  const ok = document.getElementById('okBtn');
+  ok.style.display = 'none'
+
+  const limpar = document.getElementById('limparBtn')
+  limpar.style.display = 'inline'
+
   if (inputArtist != "") {
-    await fetch(
+    fetch(
       `https://deezerdevs-deezer.p.rapidapi.com/search?q=${inputArtist}`,
       options
     )
@@ -32,24 +38,24 @@ async function idArtist() {
           .then((response) => {
             console.log(response);
             const e = document.createElement("ul");
-            e.classList.add('artistUl')
+            e.classList.add("artistUl");
+            document.body.style.backgroundImage = `url('${response.picture_big}')`;
             document.getElementById("artistName").appendChild(e).innerHTML = `
 
-      <li class="artista"><a href="${response.link}">${response.name}</a></li>
-      <img class="artistImg" src="${response.picture_big}" alt="">
-      <p>Músicas:</p>
-      `;
+       <li class="artista"><a href="${response.link}" target="_blank">${response.name}</a></li>
+        <img class="artistImg" src="${response.picture}" alt="">
+       <p class="musics">Músicas:</p>
+       `;
             const musicList = document.createElement("ul");
             musicList.classList.add("musicLi");
-            console.log(musicList)
+            console.log(musicList);
 
             for (let i = 0; i < 25; i++) {
-              const e = document.createElement('li')
-              e.classList.add('musicLi')
+              const e = document.createElement("li");
+              e.classList.add("musicLi");
               document.getElementById("artistName").appendChild(e).innerHTML = `
-      <a href="${musicasLink[i]}">${musicas[i]}</a>
+      <a href="${musicasLink[i]}" target="_blank">${musicas[i]}</a>
        `;
-           
             }
           })
           .catch((err) => console.error(err));
@@ -57,62 +63,14 @@ async function idArtist() {
         console.log(response);
       })
 
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        alert("Artista não encontrado!");
+        recarregarPágina();
+      });
   }
 }
 
-// fetch(
-//   `https://spotify23.p.rapidapi.com/search/?q=${inputArtist.replace(
-//     " ",
-//     ""
-//   )}&type=multi&offset=0&limit=10&numberOfTopResults=5`,
-//   options
-// )
-//   .then((response) => response.json())
-//   .then((response) => {
-//     console.log(response.artists.items[0].data.profile);
-//     const element = document.createElement("div");
-//     console.log(element)
-//     document.getElementById("artistName").appendChild(element).innerHTML = `
-//   <li class="artistLi" id="listaId">${response.artists.items[0].data.profile.name}</li>
-//   <img class="artistImg" src="${response.artists.items[0].data.visuals.avatarImage.sources[0].url}" alt="">
-//   <ul id="albumId">Álbuns:</ul>`
-
-//   for(let i = 0; i < 10; i++){
-//     const album = document.getElementById('albumId')
-//    // const album = document.createElement("li");
-//     album.classList.add('albumUl')
-//     console.log(album)
-//     album.appendChild(album).innerHTML = `<li>
-//     <img class="albumImg" src="${response.albums.items[i].data.coverArt.sources[0].url}" alt="">
-//     <p>${response.albums.items[i].data.name} - ${response.albums.items[i].data.date.year}</p>
-//     </li>
-//     `
-//     // document.getElementById("albumId").appendChild(album).innerHTML = `
-//     // <img class="albumImg" src="${response.albums.items[i].data.coverArt.sources[0].url}" alt="">
-//     // <p>${response.albums.items[i].data.name} - ${response.albums.items[i].data.date.year}</p>
-//     // `
-//   }
-//   ;
-//   })
-//   .catch((err) => console.error(err));
-
-// fetch("https://deezerdevs-deezer.p.rapidapi.com/artist/2255", options)
-//   .then((response) => response.json())
-//   .then((response) => {
-//     console.log(response);
-//   })
-//   .catch((err) => console.error(err));
-
-// fetch(
-//   "https://deezerdevs-deezer.p.rapidapi.com/search?q=faith%20no%20more",
-//   options
-// )
-//   .then((response) => response.json())
-//   .then((response) => console.log(response))
-//   .catch((err) => console.error(err));
-
-// fetch('https://deezerdevs-deezer.p.rapidapi.com/search?q=gal%20costa', options)
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
+function recarregarPágina() {
+  location.reload()
+}
